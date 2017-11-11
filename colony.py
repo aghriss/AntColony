@@ -7,17 +7,20 @@ Created on Fri Oct 27 19:10:36 2017
 
 defining the Ant Colony
 """
-from ant import *
+from ant import Ant
 import params
 
 class Colony:
-    
-    def __init__(self,grid):
-        
+    """ Definig the Colony class
+        The colony is a list of ants
+    """
+    def __init__(self, grid):
+
         self.ants_count = params.ants_count
         self.colony = [Ant(grid) for _ in range(self.ants_count)]
-    
+
     def work(self):
-        for a in self.colony:
-            a.work()
-    
+        """ Make all ants works !
+        """
+        for ant in self.colony:
+            ant.work()

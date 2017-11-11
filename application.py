@@ -12,11 +12,8 @@ import pygame
 import params
 
 
-class App:
-    """int: Module level variable documented inline.
-
-The docstring may span multiple lines. The type may optionally be specified
-on the first line, separated by a colon.
+class Application(object):
+    """ Defining the PyGame interface that displays the grid,ants and pheromones traces
 """
     def __init__(self):
 
@@ -24,11 +21,10 @@ on the first line, separated by a colon.
         self.grid_size = params.grid_size
         self.disp_size = list(np.array(self.grid_size)*self.block_size)
         self.display = None
-    def begin_draw(self, grid):
-        """int: Module level variable documented inline.
 
-            The docstring may span multiple lines. The type may optionally be specified
-            on the first line, separated by a colon.
+    def begin_draw(self, grid):
+        """ Displays the empty grid to add/remove walls if needeed
+            You can also edit walls when the ants are working
             """
         pygame.init()
         self.display = pygame.display.set_mode(self.disp_size)
@@ -74,19 +70,17 @@ on the first line, separated by a colon.
             pygame.display.update()
 
     def start_app(self, grid, colony):
-        """int: Module level variable documented inline.
-
-        The docstring may span multiple lines. The type may optionally be specified
-        on the first line, separated by a colon.
+        """ Start the colony algorithm and displays the changes on the grid
         """
         pygame.init()
         pygame.display.set_caption('Ant Colony')
         while True:
+            # Start iterations
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                
+
                 if pygame.mouse.get_pressed() == (1, 0, 0):
                     pos = list((np.array(pygame.mouse.get_pos())/self.block_size).astype(int))
                     print("Add wall at", pos)
@@ -99,6 +93,7 @@ on the first line, separated by a colon.
                     grid[pos].draw(self.display, self.block_size)
             self.display = pygame.display.set_mode(self.disp_size)
             self.display.fill([255, 255, 255])
+            # The core
             colony.work()
             grid.update()
             grid.draw(self.display)
